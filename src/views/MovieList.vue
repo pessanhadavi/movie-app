@@ -1,5 +1,7 @@
 <template>
-  <div class="movie-list"><h1>Movie-list</h1></div>
+  <div class="movie-list">
+    <h1>Movie-list {{ id }}</h1>
+  </div>
 </template>
 
 <script>
