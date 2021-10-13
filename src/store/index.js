@@ -12,10 +12,16 @@ export default new Vuex.Store({
     SET_USER_ID(state, id) {
       state.userId = id
     },
+    SET_USERNAME(state, username) {
+      state.username = username
+    },
   },
   actions: {
     setUserId({ commit }, id) {
       commit("SET_USER_ID", id)
+    },
+    setUsername({ commit }, username) {
+      commit("SET_USERNAME", username)
     },
   },
 })
