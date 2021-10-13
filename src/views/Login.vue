@@ -28,6 +28,13 @@ export default {
     async login() {
       if (this.userId) {
         await this.$store.dispatch("setUserId", this.userId)
+        const user = await this.$apollo.query({
+          query: require("@/graphql/currentUser.gql"),
+          variables: {
+            id: this.userId,
+          },
+        })
+        await this.$store.dispatch("setUsername", user.data.me[0].name)
         this.$router.push({ name: "movie-list", params: { id: this.userId } })
       }
     },
