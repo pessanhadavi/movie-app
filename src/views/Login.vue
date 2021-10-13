@@ -25,8 +25,9 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
       if (this.userId) {
+        await this.$store.dispatch("setUserId", this.userId)
         this.$router.push({ name: "movie-list", params: { id: this.userId } })
       }
     },
