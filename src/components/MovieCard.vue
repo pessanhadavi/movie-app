@@ -14,8 +14,10 @@
         hover
         length="5"
         size="16"
-        value="3"
+        :value="movie.imdbRating / 2"
         class="pa-2"
+        background-color="blue"
+        color="blue"
       ></v-rating>
     </div>
   </div>
