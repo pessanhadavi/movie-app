@@ -24,14 +24,18 @@
         show-arrows
         class="mt-0"
       >
-        <v-tab v-for="genre in movieGenres" :key="genre.name">
+        <v-tab
+          v-for="genre in movieGenres"
+          :key="genre.name"
+          @click="fetchMoviesByGenres(genre.name)"
+        >
           {{ genre.name }}
         </v-tab>
         <v-tab-item v-for="genre in movieGenres" :key="genre.name">
           <v-card flat>
             <v-card-text>
-              <p>
-                {{ genre.name }}
+              <p v-for="movie in movies" :key="movie.title">
+                {{ movie.title }}
               </p>
             </v-card-text>
           </v-card>
@@ -47,6 +51,7 @@ export default {
     return {
       movieGenres: null,
       movieSearch: "",
+      movies: [],
     }
   },
   created() {
@@ -60,14 +65,18 @@ export default {
       genres.data.genres.unshift({ name: "Recommended" })
       this.movieGenres = genres.data.genres.slice(0, -1)
     },
-    // async fetchMoviesByGenres() {
-    //   const movies = await this.$apollo.query({
-    //     query: require("@/graphql/getMoviesByGenres.gql"),
-    //     variables: {
-    //       genre:
-    //     }
-    //   })
-    // },
+    async fetchMoviesByGenres(genre) {
+      const movies = await this.$apollo.query({
+        query: require("@/graphql/getMoviesByGenres.gql"),
+        variables: {
+          genre: genre,
+          limit: 18,
+          offset: 0,
+        },
+      })
+      this.movies = movies.data.movies[0].movies
+      console.log(this.movies)
+    },
   },
 }
 </script>
