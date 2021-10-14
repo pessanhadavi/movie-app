@@ -50,6 +50,16 @@ export default {
       genres.data.genres.unshift({ name: "Recommended" })
       this.movieGenres = genres.data.genres.slice(0, -1)
     },
+    // async fetchMoviesByGenres() {
+    //   const movies = await this.$apollo.query({
+    //     query: require("@/graphql/getMoviesByGenres.gql"),
+    //     variables: {
+    //       genre:
+    //     }
+    //   })
+    //   genres.data.genres.unshift({ name: "Recommended" })
+    //   this.movieGenres = genres.data.genres.slice(0, -1)
+    // },
   },
 }
 </script>

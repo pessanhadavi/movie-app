@@ -1,0 +1,8 @@
+query getMoviesByGenres($genre: Str!, $limit: Int!, $offset: Int!){
+	movies: Genre(name: $genre){
+  movies(first: $limit, offset:$offset) {
+    title
+  }
+}
+
+}
