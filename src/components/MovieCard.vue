@@ -4,9 +4,11 @@
       <img :src="movie.poster" />
     </div>
 
-    <div class="movie-card-text ml-10">
-      <h2 class="mb-3">{{ movie.title }}</h2>
-      <p>{{ movie.year }}</p>
+    <div class="movie-card-content ml-10">
+      <div class="movie-card-text">
+        <h2 class="mb-3">{{ movie.title }}</h2>
+        <p>{{ movie.year }}</p>
+      </div>
       <v-rating
         empty-icon="mdi-star-outline"
         full-icon="mdi-star"

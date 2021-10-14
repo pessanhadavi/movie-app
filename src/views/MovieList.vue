@@ -81,6 +81,8 @@ export default {
           query: require("@/graphql/getRecommendedMovies.gql"),
           variables: {
             id: this.$store.state.userId,
+            limit: 15,
+            offset: 0,
           },
         })
         this.movies = movies.data.recommended[0].recommendedMovies

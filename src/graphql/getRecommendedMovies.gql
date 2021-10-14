@@ -1,6 +1,6 @@
-query getRecommendedMovies($id: ID!){
+query getRecommendedMovies($id: ID!, $limit: Int!, $offset: Int!){
 	recommended: User(userId: $id) {
-    recommendedMovies {
+    recommendedMovies(first: $limit, offset: $offset) {
       title
       year
       runtime
