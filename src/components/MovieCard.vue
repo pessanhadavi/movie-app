@@ -52,4 +52,8 @@ p {
 .v-icon {
   padding: 0;
 }
+h2 {
+  font-size: 18px;
+  padding-top: 7px;
+}
 </style>
