@@ -2,6 +2,11 @@ query getMoviesByGenres($genre: String!, $limit: Int!, $offset: Int!){
 	movies: Genre(name: $genre){
   movies(first: $limit, offset: $offset) {
     title
+    year
+    runtime
+    poster
+    imdbRating
+    movieId
   }
 }
 
