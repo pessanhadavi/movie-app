@@ -7,6 +7,16 @@
     <div class="movie-card-text ml-10">
       <h2 class="mb-3">{{ movie.title }}</h2>
       <p>{{ movie.year }}</p>
+      <v-rating
+        empty-icon="mdi-star-outline"
+        full-icon="mdi-star"
+        half-icon="mdi-star-halfFull"
+        hover
+        length="5"
+        size="16"
+        value="3"
+        class="pa-2"
+      ></v-rating>
     </div>
   </div>
 </template>
@@ -36,5 +46,8 @@ export default {
 h2,
 p {
   color: black;
+}
+.v-icon {
+  padding: 0;
 }
 </style>
