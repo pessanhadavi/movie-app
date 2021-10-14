@@ -56,13 +56,14 @@ export default {
   },
   data() {
     return {
-      movieGenres: null,
+      movieGenres: [],
       movieSearch: "",
       movies: [],
     }
   },
   created() {
-    this.fetchMovieGenres()
+    if (!this.movieGenres.length) this.fetchMovieGenres()
+    this.fetchMoviesByGenres("Recommended")
   },
   methods: {
     async fetchMovieGenres() {
@@ -74,16 +75,26 @@ export default {
     },
     async fetchMoviesByGenres(genre) {
       this.movies = []
-      const movies = await this.$apollo.query({
-        query: require("@/graphql/getMoviesByGenres.gql"),
-        variables: {
-          genre: genre,
-          limit: 15,
-          offset: 0,
-        },
-      })
-      this.movies = movies.data.movies[0].movies
-      console.log(this.movies)
+      let movies
+      if (genre === "Recommended") {
+        movies = await this.$apollo.query({
+          query: require("@/graphql/getRecommendedMovies.gql"),
+          variables: {
+            id: this.$store.state.userId,
+          },
+        })
+        this.movies = movies.data.recommended[0].recommendedMovies
+      } else {
+        movies = await this.$apollo.query({
+          query: require("@/graphql/getMoviesByGenres.gql"),
+          variables: {
+            genre: genre,
+            limit: 15,
+            offset: 0,
+          },
+        })
+        this.movies = movies.data.movies[0].movies
+      }
     },
   },
 }
