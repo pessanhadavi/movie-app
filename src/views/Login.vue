@@ -9,6 +9,7 @@
         prepend-icon="mdi-account-circle"
         color="yellow darken-4"
         v-model.number="userId"
+        @keyup.enter="login"
       />
     </v-card-text>
     <v-divider></v-divider>
