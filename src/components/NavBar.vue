@@ -4,7 +4,12 @@
       <a href="/"><h1>Movie List</h1></a>
     </div>
     <v-spacer></v-spacer>
-    <router-link to="/" class="fave-link mr-4"> <h4>Home</h4></router-link>
+    <div
+      v-if="$store.state.username && $store.state.userId"
+      class="d-flex align-center"
+    >
+      <router-link to="/" class="fave-link mr-4"> <h4>Home</h4></router-link>
+    </div>
   </v-app-bar>
 </template>
 
