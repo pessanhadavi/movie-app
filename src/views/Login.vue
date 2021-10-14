@@ -7,12 +7,13 @@
       <v-text-field
         label="Id"
         prepend-icon="mdi-account-circle"
+        color="yellow darken-4"
         v-model.number="userId"
       />
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions class="d-flex justify-center">
-      <v-btn color="info" class="mt-4" @click="login">Login</v-btn>
+      <v-btn color="yellow darken-4" class="yellow-btn mt-4" @click="login">Login</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -41,3 +42,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.yellow-btn {
+  color: white;
+}
+</style>
