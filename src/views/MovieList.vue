@@ -32,13 +32,15 @@
           {{ genre.name }}
         </v-tab>
         <v-tab-item v-for="genre in movieGenres" :key="genre.name">
-          <v-card flat>
-            <v-card-text>
-              <p v-for="movie in movies" :key="movie.title">
-                {{ movie.title }}
-              </p>
-            </v-card-text>
-          </v-card>
+          <v-row>
+            <v-col cols="12" class="d-flex flex-wrap justify-center">
+              <MovieCard
+                v-for="movie in movies"
+                :key="movie.movieId"
+                :movie="movie"
+              />
+            </v-col>
+          </v-row>
         </v-tab-item>
       </v-tabs>
     </v-card>
@@ -46,7 +48,12 @@
 </template>
 
 <script>
+import MovieCard from "@/components/MovieCard.vue"
+
 export default {
+  components: {
+    MovieCard,
+  },
   data() {
     return {
       movieGenres: null,
@@ -66,11 +73,12 @@ export default {
       this.movieGenres = genres.data.genres.slice(0, -1)
     },
     async fetchMoviesByGenres(genre) {
+      this.movies = []
       const movies = await this.$apollo.query({
         query: require("@/graphql/getMoviesByGenres.gql"),
         variables: {
           genre: genre,
-          limit: 18,
+          limit: 15,
           offset: 0,
         },
       })
