@@ -13,7 +13,9 @@
     </v-card-text>
     <v-divider></v-divider>
     <v-card-actions class="d-flex justify-center">
-      <v-btn color="yellow darken-4" class="yellow-btn mt-4" @click="login">Login</v-btn>
+      <v-btn color="yellow darken-4" class="yellow-btn mt-4" @click="login"
+        >Login</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
