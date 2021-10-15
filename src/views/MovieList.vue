@@ -27,11 +27,34 @@
         <v-tab
           v-for="genre in movieGenres"
           :key="genre.name"
-          @click="fetchMoviesByGenres(genre.name)"
+          @click="getMovies(genre.name)"
         >
           {{ genre.name }}
         </v-tab>
         <v-tab-item v-for="genre in movieGenres" :key="genre.name">
+          <v-row>
+            <v-col cols="12" class="pb-0 mt-5 px-5">
+              <div class="prev-next-btn d-flex justify-center">
+                <v-btn
+                  :disabled="moviePage === 1"
+                  icon
+                  @click="prevPage(genre.name)"
+                  ><v-icon color="yellow darken-4"
+                    >mdi-arrow-left-bold-circle</v-icon
+                  ></v-btn
+                >
+                <v-btn
+                  :disabled="movies.length < limit"
+                  icon
+                  @click="nextPage(genre.name)"
+                  ><v-icon color="yellow darken-4"
+                    >mdi-arrow-right-bold-circle</v-icon
+                  ></v-btn
+                >
+              </div>
+            </v-col>
+          </v-row>
+
           <v-row>
             <v-col cols="12" class="d-flex flex-wrap justify-center">
               <MovieCard
@@ -39,6 +62,29 @@
                 :key="movie.movieId"
                 :movie="movie"
               />
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" class="pt-0 mb-5 px-5">
+              <div class="prev-next-btn d-flex justify-center">
+                <v-btn
+                  :disabled="moviePage === 1"
+                  icon
+                  @click="prevPage(genre.name)"
+                  ><v-icon color="yellow darken-4"
+                    >mdi-arrow-left-bold-circle</v-icon
+                  ></v-btn
+                >
+                <v-btn
+                  :disabled="movies.length < limit"
+                  icon
+                  @click="nextPage(genre.name)"
+                  ><v-icon color="yellow darken-4"
+                    >mdi-arrow-right-bold-circle</v-icon
+                  ></v-btn
+                >
+              </div>
             </v-col>
           </v-row>
         </v-tab-item>
@@ -59,11 +105,14 @@ export default {
       movieGenres: [],
       movieSearch: "",
       movies: [],
+      limit: 15,
+      offset: 0,
+      moviePage: 1,
     }
   },
   created() {
     if (!this.movieGenres.length) this.fetchMovieGenres()
-    this.fetchMoviesByGenres("Recommended")
+    this.fetchMoviesByGenres("Recommended", this.offset)
   },
   methods: {
     async fetchMovieGenres() {
@@ -73,7 +122,7 @@ export default {
       genres.data.genres.unshift({ name: "Recommended" })
       this.movieGenres = genres.data.genres.slice(0, -1)
     },
-    async fetchMoviesByGenres(genre) {
+    async fetchMoviesByGenres(genre, offset) {
       this.movies = []
       let movies
       if (genre === "Recommended") {
@@ -81,8 +130,8 @@ export default {
           query: require("@/graphql/getRecommendedMovies.gql"),
           variables: {
             id: this.$store.state.userId,
-            limit: 15,
-            offset: 0,
+            limit: this.limit,
+            offset: offset,
           },
         })
         this.movies = movies.data.recommended[0].recommendedMovies
@@ -91,11 +140,30 @@ export default {
           query: require("@/graphql/getMoviesByGenres.gql"),
           variables: {
             genre: genre,
-            limit: 15,
-            offset: 0,
+            limit: this.limit,
+            offset: offset,
           },
         })
         this.movies = movies.data.movies[0].movies
+      }
+    },
+    getMovies(genre) {
+      this.moviePage = 1
+      this.fetchMoviesByGenres(genre, this.offset)
+    },
+    prevPage(genre) {
+      console.log(this.moviePage)
+      if (this.moviePage > 1) {
+        --this.moviePage
+        const offset = this.limit * this.moviePage - this.limit
+        this.fetchMoviesByGenres(genre, offset)
+      }
+    },
+    nextPage(genre) {
+      if (this.movies.length <= this.limit) {
+        ++this.moviePage
+        const offset = this.limit * (this.moviePage - 1)
+        this.fetchMoviesByGenres(genre, offset)
       }
     },
   },
