@@ -9,23 +9,17 @@
         <h2 class="mb-3">{{ movie.title }}</h2>
         <p>{{ movie.year }}</p>
       </div>
-      <v-rating
-        empty-icon="mdi-star-outline"
-        full-icon="mdi-star"
-        half-icon="mdi-star-halfFull"
-        hover
-        length="5"
-        size="16"
-        :value="movie.imdbRating / 2"
-        class="pa-2"
-        background-color="blue"
-        color="blue"
-      ></v-rating>
+      <Ratings :rating="movie.imdbRating / 2" />
     </div>
   </div>
 </template>
 <script>
+import Ratings from "@/components/Ratings.vue"
+
 export default {
+  components: {
+    Ratings,
+  },
   props: {
     movie: Object,
   },
