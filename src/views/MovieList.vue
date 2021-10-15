@@ -117,7 +117,7 @@ export default {
   methods: {
     async fetchMovieGenres() {
       const genres = await this.$apollo.query({
-        query: require("@/graphql/getMovieGenres.gql"),
+        query: require("@/graphql/movie/getMovieGenres.gql"),
       })
       genres.data.genres.unshift({ name: "Recommended" })
       this.movieGenres = genres.data.genres.slice(0, -1)
@@ -127,7 +127,7 @@ export default {
       let movies
       if (genre === "Recommended") {
         movies = await this.$apollo.query({
-          query: require("@/graphql/getRecommendedMovies.gql"),
+          query: require("@/graphql/movie/getRecommendedMovies.gql"),
           variables: {
             id: this.$store.state.userId,
             limit: this.limit,
@@ -137,7 +137,7 @@ export default {
         this.movies = movies.data.recommended[0].recommendedMovies
       } else {
         movies = await this.$apollo.query({
-          query: require("@/graphql/getMoviesByGenres.gql"),
+          query: require("@/graphql/movie/getMoviesByGenres.gql"),
           variables: {
             genre: genre,
             limit: this.limit,
@@ -152,7 +152,6 @@ export default {
       this.fetchMoviesByGenres(genre, this.offset)
     },
     prevPage(genre) {
-      console.log(this.moviePage)
       if (this.moviePage > 1) {
         --this.moviePage
         const offset = this.limit * this.moviePage - this.limit

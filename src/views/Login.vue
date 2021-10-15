@@ -33,7 +33,7 @@ export default {
       if (this.userId) {
         await this.$store.dispatch("setUserId", this.userId)
         const user = await this.$apollo.query({
-          query: require("@/graphql/currentUser.gql"),
+          query: require("@/graphql/user/currentUser.gql"),
           variables: {
             id: this.userId,
           },
