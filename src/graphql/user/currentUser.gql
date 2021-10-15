@@ -1,0 +1,7 @@
+query currentUser($id: ID!){
+me: User(userId: $id) {
+  userId
+  name
+}
+
+}

@@ -1,0 +1,5 @@
+query getMovieGenres{
+  genres: Genre {
+    name
+  }
+}

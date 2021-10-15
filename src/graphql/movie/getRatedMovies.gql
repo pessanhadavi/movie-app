@@ -1,0 +1,10 @@
+query getRatedMovies($id: ID!){
+	User(userId: $id) {
+		RATED_rel {
+			rating
+			Movie {
+        movieId
+			}
+		}
+	}
+}
