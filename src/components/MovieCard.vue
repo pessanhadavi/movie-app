@@ -16,11 +16,15 @@
         hover
         length="5"
         size="16"
-        :value="movie.imdbRating / 2"
+        :value="rating || movie.imdbRating / 2"
         class="pa-2"
-        background-color="blue"
-        color="blue"
+        :background-color="rating ? 'yellow' : 'blue'"
+        :color="rating ? 'yellow' : 'blue'"
       ></v-rating>
+      <div class="rating-source text-center">
+        <p v-if="rating" style="color: yellow">Your rating</p>
+        <p v-else style="color: blue">IMDb rating</p>
+      </div>
     </div>
   </div>
 </template>
@@ -28,6 +32,36 @@
 export default {
   props: {
     movie: Object,
+  },
+  data() {
+    return {
+      ratedMovies: [],
+      rating: 0,
+    }
+  },
+  mounted() {
+    this.getUserRatings()
+  },
+  methods: {
+    getUserRatings() {
+      this.$apollo
+        .query({
+          query: require("@/graphql/movie/getRatedMovies.gql"),
+          variables: { id: this.$store.state.userId },
+        })
+        .then((userRatings) => {
+          this.ratedMovies = userRatings.data.User[0].RATED_rel
+          this.isMovieRated()
+        })
+    },
+    isMovieRated() {
+      const ratedMovie = this.ratedMovies.filter(
+        (movie) => movie.Movie.movieId === this.movie.movieId
+      )
+      if (ratedMovie.length) {
+        this.rating = ratedMovie[0].rating
+      }
+    },
   },
 }
 </script>
@@ -40,6 +74,7 @@ export default {
     box-shadow: 0 0 8px rgba(238, 255, 0, 0.747);
   }
 }
+
 .movie-card-img {
   height: 190px;
 
@@ -47,15 +82,26 @@ export default {
     height: 100%;
   }
 }
+
 h2,
 p {
   color: black;
 }
+
 .v-icon {
   padding: 0;
 }
+
 h2 {
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 7px;
+}
+
+.movie-card-text p {
+  font-size: 12px;
+}
+
+.rating-source p {
+  font-size: 10px;
 }
 </style>
