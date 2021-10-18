@@ -1,0 +1,10 @@
+mutation addRatingToMovie($userId: ID!, $movieId: ID!, $rating: Float!, $timestamp: Int!) {
+
+	MergeUserRATED_rel(
+		from: { userId: $userId }
+		to: { movieId: $movieId }
+		data: { rating: $rating, timestamp: $timestamp }
+	) {
+		rating
+	}
+}

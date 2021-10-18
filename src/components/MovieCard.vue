@@ -16,13 +16,13 @@
         hover
         length="5"
         size="16"
-        :value="rating || movie.imdbRating / 2"
+        :value="rated ? rating : movie.imdbRating / 2"
         class="pa-2"
-        :background-color="rating ? 'yellow' : 'blue'"
-        :color="rating ? 'yellow' : 'blue'"
+        :background-color="rated ? 'yellow' : 'blue'"
+        :color="rated ? 'yellow' : 'blue'"
       ></v-rating>
       <div class="rating-source text-center">
-        <p v-if="rating" style="color: yellow">Your rating</p>
+        <p v-if="rated" style="color: yellow">Your rating</p>
         <p v-else style="color: blue">IMDb rating</p>
       </div>
     </div>
@@ -37,6 +37,7 @@ export default {
     return {
       ratedMovies: [],
       rating: 0,
+      rated: false,
     }
   },
   mounted() {
@@ -60,6 +61,7 @@ export default {
       )
       if (ratedMovie.length) {
         this.rating = ratedMovie[0].rating
+        this.rated = true
       }
     },
   },
