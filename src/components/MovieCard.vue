@@ -16,10 +16,11 @@
         hover
         length="5"
         size="16"
-        :value="rated ? rating : movie.imdbRating / 2"
+        v-model.number="rating"
         class="pa-2"
         :background-color="rated ? 'yellow' : 'blue'"
         :color="rated ? 'yellow' : 'blue'"
+        @input="rateMovie"
       ></v-rating>
       <div class="rating-source text-center">
         <p v-if="rated" style="color: yellow">Your rating</p>
@@ -44,16 +45,13 @@ export default {
     this.getUserRatings()
   },
   methods: {
-    getUserRatings() {
-      this.$apollo
-        .query({
-          query: require("@/graphql/movie/getRatedMovies.gql"),
-          variables: { id: this.$store.state.userId },
-        })
-        .then((userRatings) => {
-          this.ratedMovies = userRatings.data.User[0].RATED_rel
-          this.isMovieRated()
-        })
+    async getUserRatings() {
+      const userRatings = await this.$apollo.query({
+        query: require("@/graphql/movie/getRatedMovies.gql"),
+        variables: { id: this.$store.state.userId },
+      })
+      this.ratedMovies = userRatings.data.User[0].RATED_rel
+      this.isMovieRated()
     },
     isMovieRated() {
       const ratedMovie = this.ratedMovies.filter(
@@ -62,7 +60,21 @@ export default {
       if (ratedMovie.length) {
         this.rating = ratedMovie[0].rating
         this.rated = true
+      } else {
+        this.rating = this.movie.imdbRating / 2
       }
+    },
+    rateMovie() {
+      this.$apollo.mutate({
+        mutation: require("@/graphql/movie/addRatingToMovie.gql"),
+        variables: {
+          userId: this.$store.state.userId,
+          movieId: this.movie.movieId,
+          rating: this.rating,
+          timestamp: Math.round(new Date().getTime() / 1000),
+        },
+      })
+      this.rated = true
     },
   },
 }
