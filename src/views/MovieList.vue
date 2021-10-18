@@ -11,6 +11,8 @@
               :append-outer-icon="'mdi-magnify'"
               :append-icon="movieSearch ? 'mdi-close' : ''"
               class="pt-3"
+              @click:append-outer="search"
+              @click:append="cleanSearch"
             />
           </v-col>
         </v-row>
@@ -108,6 +110,7 @@ export default {
       limit: 15,
       offset: 0,
       moviePage: 1,
+      activeGenre: "Recommended",
     }
   },
   created() {
@@ -148,6 +151,7 @@ export default {
       }
     },
     getMovies(genre) {
+      this.activeGenre = genre
       this.moviePage = 1
       this.fetchMoviesByGenres(genre, this.offset)
     },
@@ -164,6 +168,25 @@ export default {
         const offset = this.limit * (this.moviePage - 1)
         this.fetchMoviesByGenres(genre, offset)
       }
+    },
+    async search() {
+      if (this.movieSearch) {
+        const search = await this.$apollo.query({
+          query: require("@/graphql/movie/searchMovie.gql"),
+          variables: {
+            title: this.movieSearch,
+            limit: this.limit,
+            offset: this.offset,
+          },
+        })
+        this.movies = search.data.Movie
+      } else {
+        this.fetchMoviesByGenres(this.activeGenre, this.offset)
+      }
+    },
+    cleanSearch() {
+      this.movieSearch = ""
+      this.fetchMoviesByGenres(this.activeGenre, this.offset)
     },
   },
 }
