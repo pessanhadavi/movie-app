@@ -1,0 +1,10 @@
+query searchMovie($title: String!, $limit: Int!, $offset: Int!) {
+	Movie(first: $limit, offset: $offset, filter: { title_contains: $title}) {
+		title
+    year
+    runtime
+    poster
+    imdbRating
+    movieId
+	}
+}
