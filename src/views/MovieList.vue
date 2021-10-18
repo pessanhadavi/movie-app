@@ -11,6 +11,7 @@
               :append-outer-icon="'mdi-magnify'"
               :append-icon="movieSearch ? 'mdi-close' : ''"
               class="pt-3"
+              @keyup.enter="search"
               @click:append-outer="search"
               @click:append="cleanSearch"
             />
