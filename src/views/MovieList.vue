@@ -115,7 +115,8 @@ export default {
     }
   },
   created() {
-    if (!this.movieGenres.length) this.fetchMovieGenres()
+    this.movieGenres = []
+    this.fetchMovieGenres()
     this.fetchMoviesByGenres("Recommended", this.offset)
   },
   methods: {
@@ -123,8 +124,8 @@ export default {
       const genres = await this.$apollo.query({
         query: require("@/graphql/movie/getMovieGenres.gql"),
       })
-      genres.data.genres.unshift({ name: "Recommended" })
       this.movieGenres = genres.data.genres.slice(0, -1)
+      this.movieGenres.unshift({ name: "Recommended" })
     },
     async fetchMoviesByGenres(genre, offset) {
       this.movies = []
