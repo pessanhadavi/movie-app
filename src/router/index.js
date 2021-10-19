@@ -4,6 +4,7 @@ import Login from "../views/Login.vue"
 import MovieList from "../views/MovieList.vue"
 import MovieShow from "../views/MovieShow.vue"
 import SignUp from "../views/SignUp.vue"
+import Profile from "../views/Profile.vue"
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,12 @@ const routes = [
     path: "/signup",
     name: "signup",
     component: SignUp,
+  },
+  {
+    path: "/:id/profile",
+    name: "profile",
+    component: Profile,
+    props: true,
   },
 ]
 
