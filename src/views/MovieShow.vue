@@ -3,6 +3,16 @@
     <v-card>
       <v-toolbar flat color="yellow darken-4" dark height="80px">
         <h2>{{ movie.title }}</h2>
+        <v-spacer></v-spacer>
+        <router-link
+          :to="{
+            name: 'movie-list',
+            params: { id: this.$store.state.userId },
+          }"
+          class="nav-link mr-4"
+        >
+          <v-icon>mdi-restart</v-icon>
+        </router-link>
       </v-toolbar>
       <v-row>
         <v-col cols="12" class="d-flex pa-8">
