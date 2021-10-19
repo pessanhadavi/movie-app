@@ -17,7 +17,9 @@
         <v-btn color="yellow darken-4" class="dark-btn" type="submit"
           >Update</v-btn
         >
-        <v-btn color="red darken-4" class="dark-btn">Delete Profile</v-btn>
+        <v-btn color="red darken-4" class="dark-btn" @click="deleteUser"
+          >Delete Profile</v-btn
+        >
       </v-card-actions>
     </v-form>
   </v-card>
@@ -40,6 +42,17 @@ export default {
       })
       await this.$store.dispatch("setUsername", this.userName)
     },
+  },
+  async deleteUser() {
+    await this.$apollo.mutate({
+      mutation: require("@/graphql/user/deleteUser.gql"),
+      variables: {
+        id: this.$store.state.userId,
+      },
+    })
+    this.$store.dispatch("setUserId", 0)
+    this.$store.dispatch("setUsername", "")
+    this.$router.push({ name: "login" })
   },
 }
 </script>
