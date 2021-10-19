@@ -26,10 +26,22 @@
             </h4>
           </a>
         </template>
-        <v-list class="pa-0" width="90px">
+        <v-list class="pa-0 d-flex flex-column" width="110px">
+          <router-link
+            :to="{
+              name: 'profile',
+              params: { id: this.$store.state.userId },
+            }"
+          >
+            <v-list-item class="dropdown-item d-flex justify-center">
+              <v-list-item-title class="text-center pa-0 px-1"
+                >Profile</v-list-item-title
+              >
+            </v-list-item>
+          </router-link>
           <a href="/">
-            <v-list-item class="logout">
-              <v-list-item-title class="text-center pa-0"
+            <v-list-item class="dropdown-item">
+              <v-list-item-title class="text-center pa-0 px-1"
                 >Logout</v-list-item-title
               >
             </v-list-item>
@@ -48,7 +60,7 @@ h4 {
 .nav-link:hover {
   opacity: 0.6;
 }
-.logout {
+.dropdown-item {
   color: black;
   a {
     color: black;
