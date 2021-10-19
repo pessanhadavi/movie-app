@@ -32,17 +32,34 @@
           </div>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col cols="12">
+          <h2 class="mx-10">You may also like:</h2>
+          <div class="similar-movies pa-10 pt-3 d-flex justify-space-around">
+            <MovieCard
+              v-for="film in movie.similarMovies"
+              :key="film.movieId"
+              :movie="film"
+            />
+          </div>
+        </v-col>
+      </v-row>
     </v-card>
   </div>
 </template>
 
 <script>
+import MovieCard from "@/components/MovieCard.vue"
+
 export default {
   props: {
     movieId: {
       type: Number,
       required: true,
     },
+  },
+  components: {
+    MovieCard,
   },
   data() {
     return {
@@ -61,6 +78,7 @@ export default {
         },
       })
       this.movie = movie.data.Movie[0]
+      console.log(this.movie.similarMovies)
     },
   },
 }
@@ -72,7 +90,7 @@ export default {
 
   img {
     height: 100%;
-    border: 5px solid #f57f17;
+    border: 4px solid #f57f17;
   }
 }
 </style>
