@@ -88,7 +88,6 @@ export default {
         },
       })
       this.movie = movie.data.Movie[0]
-      console.log(this.movie.similarMovies)
     },
   },
 }
