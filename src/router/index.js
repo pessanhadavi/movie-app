@@ -2,6 +2,7 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import Login from "../views/Login.vue"
 import MovieList from "../views/MovieList.vue"
+import MovieShow from "../views/MovieShow.vue"
 
 Vue.use(VueRouter)
 
@@ -12,9 +13,15 @@ const routes = [
     component: Login,
   },
   {
-    path: "/users/:id/movies",
+    path: "/:id/movies",
     name: "movie-list",
     component: MovieList,
+    props: true,
+  },
+  {
+    path: "/:id/movies/:movieId",
+    name: "movie-show",
+    component: MovieShow,
     props: true,
   },
 ]
