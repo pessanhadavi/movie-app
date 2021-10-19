@@ -1,14 +1,27 @@
 <template>
   <div class="movie-card-wrapper d-flex align-center pa-3 ma-2">
     <div class="movie-card-img">
-      <img :src="movie.poster" />
+      <router-link
+        :to="{
+          name: 'movie-show',
+          params: { movieId: parseInt(movie.movieId) },
+        }"
+        ><img :src="movie.poster"
+      /></router-link>
     </div>
 
     <div class="movie-card-content ml-10">
-      <div class="movie-card-text">
-        <h2 class="mb-3">{{ movie.title }}</h2>
-        <p>{{ movie.year }}</p>
-      </div>
+      <router-link
+        :to="{
+          name: 'movie-show',
+          params: { movieId: parseInt(movie.movieId) },
+        }"
+      >
+        <div class="movie-card-text">
+          <h2 class="mb-3">{{ movie.title }}</h2>
+          <p>{{ movie.year }}</p>
+        </div>
+      </router-link>
       <v-rating
         empty-icon="mdi-star-outline"
         full-icon="mdi-star"
