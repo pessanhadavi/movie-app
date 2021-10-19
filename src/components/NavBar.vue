@@ -8,7 +8,15 @@
       v-if="$store.state.username && $store.state.userId"
       class="d-flex align-center"
     >
-      <router-link to="/" class="nav-link mr-4"> <h4>Home</h4></router-link>
+      <router-link
+        :to="{
+          name: 'movie-list',
+          params: { id: this.$store.state.userId },
+        }"
+        class="nav-link mr-4"
+      >
+        <h4>Home</h4></router-link
+      >
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <a v-bind="attrs" v-on="on" class="nav-link">
