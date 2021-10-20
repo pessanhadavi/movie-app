@@ -1,7 +1,7 @@
 <template>
   <v-card width="400" class="mx-auto mt-16 pa-10 pb-5">
     <v-card-title>
-      <h1 class="display-1">Profile</h1>
+      <h1 class="display-1">Your profile</h1>
     </v-card-title>
     <v-form @submit.prevent="updateUser">
       <v-card-text>
